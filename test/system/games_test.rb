@@ -10,18 +10,23 @@ class GamesTest < ApplicationSystemTestCase
     visit new_url
     fill_in "word", with: "Mypineapplehurts!"
     click_on "Submit!"
-
     assert_text "Mypineapplehurts! can't be made with those letters."
   end
   test "Submitting a one letter consonant shows invalid word" do
     visit new_url
-    p all(:css, "li")[0].text(:all)
-    fill_in "word", with: "b"
-
+    first_letter = find(:css, "#letters", visible: false).value.gsub(/[AEIOU]/, '')[0]
+    fill_in "word", with: first_letter
     click_on "Submit!"
-
-    p URI.parse(current_url).query
-
-    assert_text "b is not a valid word!"
+    assert_text "#{first_letter} is not a valid word!"
+  end
+  test "Submitting a valid word gives a score" do
+    visit new_url
+    field = find(:css, "#letters", visible: false)
+    field.set "ABCDEFGHIJ"
+    p find(:css, "#letters", visible: false).value
+    p field
+    fill_in "word", with: "Mypineapplehurts!"
+    click_on "Submit!"
+    assert_text "Mypineapplehurts! can't be made with those letters."
   end
 end
