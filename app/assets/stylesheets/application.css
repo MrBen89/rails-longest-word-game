@@ -28,3 +28,8 @@
   color: aliceblue;
   background-color: blue;
  }
+
+ .answer {
+  display: flex;
+  align-content: space-around;
+ }

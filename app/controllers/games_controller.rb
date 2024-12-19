@@ -15,13 +15,15 @@ class GamesController < ApplicationController
         word_in_letters = false
       end
     end
+    session[:score] = 0 unless session[:score]
 
     if word_in_letters == false
       @message = "#{params[:word]} can't be made with those letters."
     elsif doc["found"] == false
       @message = "#{params[:word]} is not a valid word!"
     else
-      @message = "#{params[:word]} is worth #{doc["length"].to_i * doc["length"].to_i} points"
+      session[:score] += doc["length"].to_i * doc["length"].to_i
+      @message = "#{params[:word]} is worth #{doc["length"].to_i * doc["length"].to_i} points. Your total score is #{session[:score]}"
     end
   end
 end
