@@ -19,7 +19,7 @@ class GamesController < ApplicationController
 
     if word_in_letters == false
       @message = "#{params[:word]} can't be made with those letters."
-    elsif doc["found"] == false || (params[:word].length <= 1 || params[:word] != "A" || params[:word] != "I" )
+    elsif doc["found"] == false || params[:word].length <= 1
       @message = "#{params[:word]} is not a valid word!"
     else
       session[:score] += doc["length"].to_i * doc["length"].to_i

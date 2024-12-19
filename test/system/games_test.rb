@@ -22,11 +22,9 @@ class GamesTest < ApplicationSystemTestCase
   test "Submitting a valid word gives a score" do
     visit new_url
     field = find(:css, "#letters", visible: false)
-    field.set "ABCDEFGHIJ"
-    p find(:css, "#letters", visible: false).value
-    p field
-    fill_in "word", with: "Mypineapplehurts!"
+    execute_script("arguments[0].value = 'ABCDEFGHIJ'", field)
+    fill_in "word", with: "bad"
     click_on "Submit!"
-    assert_text "Mypineapplehurts! can't be made with those letters."
+    assert_text "bad is worth 9 points. Your total score is 9"
   end
 end
